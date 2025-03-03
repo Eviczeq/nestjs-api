@@ -38,7 +38,19 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const token = this.jwtService.sign({ id: user.id, email: user.email });
+    const token = this.jwtService.sign(
+      { id: user.id, email: user.email },
+      { expiresIn: '1h' },
+    );
     return { access_token: token };
   }
+
+  // async logout(@Req() request: Request) {
+  //   request.session.destroy(() => {
+  //     return {
+  //       message: 'Logout successful',
+  //       statusCode: HttpStatus.OK,
+  //     };
+  //   });
+  // }
 }

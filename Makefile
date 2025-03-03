@@ -1,14 +1,22 @@
+RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+$(eval $(RUN_ARGS):;@:)
+
+
 # ----- コンテナ管理 -----
 up:
-	docker compose up -d app db
+	docker compose up -d $(RUN_ARGS)
 up-a:
 	docker compose up app db
 up-build:
-	docker compose up -d --build app db
+	docker compose up -d --build app db mailpit
 stop:
 	docker compose stop
 down:
-	docker compose down --remove-orphans
+	docker compose kill $(RUN_ARGS)
+	docker compose rm -f $(RUN_ARGS)
+restart:
+	@make down $(RUN_ARGS)
+	@make up $(RUN_ARGS)
 down-rmi:
 	docker compose down --remove-orphans --rmi local
 down-volume:

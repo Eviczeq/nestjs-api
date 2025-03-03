@@ -1,18 +1,18 @@
 version: "3.8"
 services:
-  api:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: nest_api
     restart: always
     ports:
-      - "3000:3000"
+      - "3001:3001"
     tty: true
     volumes:
       - type: bind
         source: .
-        target: /api
+        target: /app
     depends_on:
       db:
         condition: service_healthy

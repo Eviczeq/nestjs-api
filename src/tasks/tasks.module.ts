@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksService } from './tasks.service';
 import { TasksController } from './tasks.controller';
-import { Task } from './task.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Task])], // Register MySQL entity
+  imports: [ConfigModule],
   controllers: [TasksController],
   providers: [TasksService],
 })
